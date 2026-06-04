@@ -1,13 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import { App, StringIndexed } from '@slack/bolt';
-
+import { CustomApp } from '.';
 import { commandSchema } from './schemas/command';
 
 const COMMANDS_DIR = path.join(import.meta.dirname, 'commands');
 
-export async function loadCommands(app: App<StringIndexed>) {
+export async function loadCommands(app: CustomApp) {
   const files = await fs.readdir(COMMANDS_DIR);
 
   for (const file of files) {
@@ -15,6 +14,7 @@ export async function loadCommands(app: App<StringIndexed>) {
     const { default: raw } = await import(path.join(COMMANDS_DIR, file));
     const command = commandSchema.parse(raw);
     app.command(command.name, command.listener);
+    app.commands.push(command);
   }
 
   console.log(`Loaded ${files.length} commands`);
