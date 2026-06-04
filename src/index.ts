@@ -4,6 +4,7 @@ import { Command } from '~/schemas/command';
 
 import { env } from './env';
 import { loadCommands } from './loader';
+import { logger } from './logger';
 
 export class CustomApp extends App {
   public commands: Array<Command> = [];
@@ -19,5 +20,5 @@ export const app = new CustomApp({
   await loadCommands(app);
 
   await app.start();
-  console.log('Bot is running!');
+  logger.info('Bot is running!');
 })();
