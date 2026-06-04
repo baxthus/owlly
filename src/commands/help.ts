@@ -1,5 +1,6 @@
 import { app } from '~/index';
 import { Command } from '~/schemas/command';
+import { createTableBlock } from '~/utils/create-table';
 
 export default <Command>{
   name: '/owl-help',
@@ -7,11 +8,25 @@ export default <Command>{
   listener: async (ctx) => {
     await ctx.ack();
 
-    const message: string[] = ['*Available commands:*'];
-    for (const command of app.commands) {
-      message.push(`${command.name}: ${command.description}`);
-    }
-
-    await ctx.respond({ text: message.join('\n') });
+    await ctx.respond({
+      blocks: [
+        {
+          type: 'rich_text',
+          elements: [
+            {
+              type: 'rich_text_section',
+              elements: [{ type: 'text', text: 'Available commands', style: { bold: true } }],
+            },
+          ],
+        },
+        createTableBlock(
+          ['Command', 'Description'],
+          app.commands.map((command) => ({
+            Command: command.name,
+            Description: command.description,
+          })),
+        ),
+      ],
+    });
   },
 };
