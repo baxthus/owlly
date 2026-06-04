@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "eslint"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn",
+    "restriction": "warn"
+  },
+  "env": {
+    "builtin": true
+  },
+  "rules": {
+    "eslint/no-console": "off",
+    "typescript/explicit-function-return-type": "off",
+    "typescript/explicit-module-boundary-types": "off",
+    "oxc/no-async-await": "off"
+  }
+}
