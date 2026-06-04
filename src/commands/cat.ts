@@ -9,7 +9,7 @@ const schema = z
   .array()
   .length(1);
 
-export default <Command>{
+export const command = <Command>{
   name: '/owl-cat',
   description: 'Get a random cat image',
   listener: async (ctx) => {

@@ -22,7 +22,7 @@ const searchSchema = z.object({
   }),
 });
 
-export default <Command>{
+export const command = <Command>{
   name: '/owl-cep-search',
   description: 'Search for a CEP (Brazilian ZIP code)',
   listener: async (ctx) => {

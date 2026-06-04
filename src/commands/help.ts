@@ -2,7 +2,7 @@ import { app } from '~/index';
 import { Command } from '~/schemas/command';
 import { createTableBlock } from '~/utils/create-table';
 
-export default <Command>{
+export const command = <Command>{
   name: '/owl-help',
   description: 'Displays a list of available commands',
   listener: async (ctx) => {
@@ -21,9 +21,9 @@ export default <Command>{
         },
         createTableBlock(
           ['Command', 'Description'],
-          app.commands.map((command) => ({
-            Command: command.name,
-            Description: command.description,
+          app.commands.map((cmd) => ({
+            Command: cmd.name,
+            Description: cmd.description,
           })),
         ),
       ],

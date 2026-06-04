@@ -1,6 +1,6 @@
 import type { Command } from '~/schemas/command';
 
-export default <Command>{
+export const command = <Command>{
   name: '/owl-ping',
   description: 'Replies with Pong!',
   listener: async (ctx) => {
