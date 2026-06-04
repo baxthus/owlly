@@ -2,6 +2,7 @@ import type { Command } from '~/schemas/command';
 
 export default <Command>{
   name: '/owl-ping',
+  description: 'Replies with Pong!',
   listener: async (ctx) => {
     const start = Date.now();
     await ctx.ack();

@@ -9,13 +9,15 @@ export class CustomApp extends App {
   public commands: Array<Command> = [];
 }
 
-const app = new CustomApp({
+export const app = new CustomApp({
   token: env.SLACK_BOT_TOKEN,
   appToken: env.SLACK_APP_TOKEN,
   socketMode: true,
 });
 
-await loadCommands(app);
+(async () => {
+  await loadCommands(app);
 
-await app.start();
-console.log('Bot is running!');
+  await app.start();
+  console.log('Bot is running!');
+})();
