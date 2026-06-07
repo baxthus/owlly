@@ -1,6 +1,8 @@
+import { PlainTextInputAction } from '@slack/bolt';
 import { Block } from '@slack/types';
 import z from 'zod';
 
+import { Action } from '~/schemas/action';
 import { Command } from '~/schemas/command';
 import { createTableBlock } from '~/utils/create-table';
 
@@ -25,10 +27,35 @@ const searchSchema = z.object({
 export const command = <Command>{
   name: '/owl-cep-search',
   description: 'Search for a CEP (Brazilian ZIP code)',
+  uses: ['BrasilAPI'],
   listener: async (ctx) => {
     await ctx.ack();
 
-    const cep = ctx.command.text;
+    await ctx.respond({
+      blocks: [
+        {
+          type: 'input',
+          dispatch_action: true,
+          element: {
+            type: 'plain_text_input',
+            action_id: 'owl-cep-search-input',
+          },
+          label: {
+            type: 'plain_text',
+            text: 'Type a CEP (e.g. `01001-000`)',
+          },
+        },
+      ],
+    });
+  },
+};
+
+export const action = <Action>{
+  id: 'owl-cep-search-input',
+  listener: async (ctx) => {
+    await ctx.ack();
+
+    const cep = (ctx.action as PlainTextInputAction).value;
     if (!cepSchema.safeParse(cep).success) {
       await ctx.respond('Invalid CEP format. Use `XXXXX-XXX` (e.g. `01001-000`)');
       return;

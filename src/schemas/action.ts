@@ -7,7 +7,7 @@ import {
 import z from 'zod';
 
 export const actionSchema = z.object({
-  id: z.templateLiteral(['owl-', z.string(), '-', z.enum(['button'])]),
+  id: z.templateLiteral(['owl-', z.string(), '-', z.enum(['button', 'input'])]),
   listener: z.function({
     input: [z.custom<SlackActionMiddlewareArgs<BlockAction> & AllMiddlewareArgs<StringIndexed>>()],
     output: z.promise(z.void()),

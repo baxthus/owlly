@@ -12,6 +12,7 @@ const schema = z
 export const command = <Command>{
   name: '/owl-cat',
   description: 'Get a random cat image',
+  uses: ['TheCatAPI'],
   listener: async (ctx) => {
     await ctx.ack();
 

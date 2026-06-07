@@ -4,6 +4,7 @@ import z from 'zod';
 export const commandSchema = z.object({
   name: z.templateLiteral(['/owl-', z.string()]),
   description: z.string(),
+  uses: z.array(z.string()).optional(),
   listener: z.function({
     input: [z.custom<SlackCommandMiddlewareArgs & AllMiddlewareArgs<StringIndexed>>()],
     output: z.promise(z.void()),
